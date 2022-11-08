@@ -6,6 +6,9 @@ import java.io.FileNotFoundException;
 
 public class Main {
 
+    //create array of 8 page tables, current points to it 
+
+
     //global variables
     static int accesses = 0;
     static int hits = 0;
@@ -34,8 +37,7 @@ public class Main {
 
                 //check the instruction
                 if(instruction == "new") {
-                    //create a new page table
-                    
+                    //we've already created all the page tables, so we don't need to worry about that here
                     currentPageTable = num;
 
                 } else if(instruction == "switch") {
@@ -51,6 +53,19 @@ public class Main {
 
             //close scanner
             s.close();
+
+
+
+
+
+
+
+
+
+
+
+
+
 
         } catch(FileNotFoundException e) {
             System.out.println("Error! ");
