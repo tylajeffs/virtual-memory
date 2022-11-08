@@ -1,5 +1,7 @@
 import java.util.Arrays;
 import java.util.Scanner;
+import java.io.File;
+import java.io.FileNotFoundException;
 
 
 public class Main {
@@ -14,43 +16,56 @@ public class Main {
 
     public static void main(String[] args) {
 
-        //create scanner to read file
-        Scanner s = new Scanner(System.in);
+        
+        try {
+            //create scanner to read file
+            File f = new File("VMInput1.txt");
+            Scanner s = new Scanner(f);
 
-        //read through every line 
-        while(s.hasNextLine()) {
+            //read through every line 
+            while(s.hasNextLine()) {
 
-            //store the instruction and the bits
-            String line = s.nextLine();
-            String instruction = line.split(" ")[0];
-            int num = Integer.parseInt(line.split(" ")[1]);
+                //store the instruction and the bits
+                String line = s.nextLine();
+                String instruction = line.split(" ")[0];
+                int num = Integer.parseInt(line.split(" ")[1]);
 
-            //CHANGE THE BITS DOWN??
+                //CHANGE THE BITS DOWN??
 
-            //check the instruction
-            if(instruction == "new") {
-                //create a new page table
+                //check the instruction
+                if(instruction == "new") {
+                    //create a new page table
+                    
+                    currentPageTable = num;
 
-            } else if(instruction == "switch") {
-                //switch page tables
-                currentPageTable = num;
+                } else if(instruction == "switch") {
+                    //switch page tables
+                    currentPageTable = num;
 
-            } else if(instruction == "access") {
-                //access the memory
+                } else if(instruction == "access") {
+                    //move the int down so we have a number between 0-63
+                    num = num >> 10;
+                }
 
             }
 
+            //close scanner
+            s.close();
+
+        } catch(FileNotFoundException e) {
+            System.out.println("Error! ");
+            e.printStackTrace();
         }
+        
 
-        //close scanner
-        s.close();
+        
 
 
-  
+
         //print out sum, median, and mean
-        System.out.println("sum: " + sum);
-        System.out.println("mean: " + mean);
-        System.out.println("median: " + median);
+        System.out.println("sum: " );
+        System.out.println("mean: " );
+        System.out.println("median: ");
 
     }
 }
