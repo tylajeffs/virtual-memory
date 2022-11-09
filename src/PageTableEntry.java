@@ -21,9 +21,14 @@ public class PageTableEntry {
     public boolean getIsValid() {
         return isValid;
     }
-    
+
     public void setIsValid(boolean isValid) {
         this.isValid = isValid;
     }
     
+
+    @Override
+    public String toString() {
+        return "isValid: " + isValid + "  --  inMemory " + inMemory;
+    }
 }

@@ -48,17 +48,24 @@ public class Main {
                 System.out.println("num: " + num);
 
                 //check the instruction
-                if(instruction == "new") {
+                if(instruction.equals("new") ) {
                     //we've already created all the page tables, so we don't need to worry about that here
                     currentPageTable = num;
+                    System.out.println("the instuction is new ");
 
-                } else if(instruction == "switch") {
+                } else if(instruction.equals("switch")) {
                     //get the current page table
+                    System.out.println("ptable before switching: " + ptable);
                     ptable = getCurrentPageTable(num);
+                    System.out.println("ptable after switching: " + ptable);
+   
 
-                } else if(instruction == "access") {
+                } else if(instruction.equals("access")) {
+                    
                     //move the int down so we have a number between 0-63 (Page Index)
                     int pageIndex = num >> 10;
+
+                    System.out.println("the page index is " + pageIndex);
 
                     //check to see if the entry is valid
                     if(ptable.getPageTableEntry(pageIndex).getIsValid() == false) {
@@ -133,7 +140,7 @@ public class Main {
 
         //go through all the PageTables to find the right one
         for(int i=0; i<8; i++) {
-            if(n == pageTables.get(i).pageTableId) {
+            if(n == pageTables.get(i).getId()) {
                 pt = pageTables.get(i);
             }
         }
