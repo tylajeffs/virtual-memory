@@ -51,45 +51,49 @@ public class Main {
                 if(instruction.equals("new") ) {
                     //we've already created all the page tables, so we don't need to worry about that here
                     currentPageTable = num;
-                    System.out.println("the instuction is new ");
 
                 } else if(instruction.equals("switch")) {
                     //get the current page table
-                    System.out.println("ptable before switching: " + ptable);
                     ptable = getCurrentPageTable(num);
-                    System.out.println("ptable after switching: " + ptable);
-   
 
                 } else if(instruction.equals("access")) {
                     
                     //move the int down so we have a number between 0-63 (Page Index)
                     int pageIndex = num >> 10;
 
-                    System.out.println("the page index is " + pageIndex);
-
                     //check to see if the entry is valid
                     if(ptable.getPageTableEntry(pageIndex).getIsValid() == false) {
                         //not valid
+                        System.out.println("The page table entry is NOT VALID");
+
                         misses++;
                         accesses++;
                         compMisses++;
+
+                        //get the new page frame from memory and update this page table entry
+                        getNewPageFrame(ptable.getPageTableEntry(pageIndex));
+
                     } else {
 
                         //entry is valid, check to see if it is in memory
                         if(ptable.getPageTableEntry(pageIndex).getInMemory() == false) {
                             //not in memory
+
+                            System.out.println("The page table entry is VALID but NOT IN MEMORY");
                             misses++;
                             accesses++;
+
+                            //get the new page frame from memory and update this page table entry
+                            getNewPageFrame(ptable.getPageTableEntry(pageIndex));
+                            
                         } else {
                             //yes, is in memory
+                            System.out.println("The page table entry is VALID and IN MEMORY");
                             hits++;
                             accesses++;
                         }
 
                     }
-                    
-
-
                     
                 }
 
@@ -121,10 +125,10 @@ public class Main {
 
 
 
-        //print out sum, median, and mean
+        //print out the accesses, hits, misses, compulsory misses
+        System.out.println("accesses: " + accesses);
         System.out.println("hits: " + hits);
         System.out.println("misses: " + misses);
-        System.out.println("accesses: " + accesses);
         System.out.println("compulsory misses: " + compMisses);
 
     }
@@ -146,6 +150,15 @@ public class Main {
         }
 
         return pt;
+    }
+
+
+    public static void getNewPageFrame(PageTableEntry pte) {
+        //get the new page frame from memory
+
+        //update the page table entry - it is now in memory and valid
+        pte.setIsValid(true);
+        pte.setInMemory(true);
     }
 
 }

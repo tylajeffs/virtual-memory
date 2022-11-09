@@ -27,14 +27,10 @@ public class PageTable {
     public PageTableEntry getPageTableEntry(int n) {
         PageTableEntry p = null;
 
-        System.out.println("n =  " + n);
-
-
         //find the page table entry at the index
         for(int i=0; i<64; i++) {
             if(n == i) {
                 p = pages[i];
-                System.out.println("return value is now " + p);
             }
         }
 
