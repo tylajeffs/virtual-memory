@@ -19,5 +19,23 @@ public class PageTable {
         }
     }
 
+    /**
+     * method to find the correct page table entry given the index
+     * @param n index
+     * @return page table entry
+     */
+    public PageTableEntry getPageTableEntry(int n) {
+        PageTableEntry p = null;
+
+        //find the page table entry at the index
+        for(int i=0; i>64; i++) {
+            if(n == i) {
+                p = pages[i];
+            }
+        }
+
+        return p;
+    }
+
 
 }

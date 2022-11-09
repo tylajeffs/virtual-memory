@@ -14,8 +14,9 @@ public class Main {
     static int accesses = 0;
     static int hits = 0;
     static int misses = 0;
-    static int compMisses = 0;
+    static int compMisses = 0; //compulsory miss (will happen no matter what)
     static int currentPageTable = 0;
+    static PageTable ptable = null;
 
 
     public static void main(String[] args) {
@@ -49,12 +50,35 @@ public class Main {
                     currentPageTable = num;
 
                 } else if(instruction == "switch") {
-                    //switch page tables
-                    currentPageTable = num;
+                    //get the current page table
+                    ptable = getCurrentPageTable(num);
 
                 } else if(instruction == "access") {
-                    //move the int down so we have a number between 0-63
-                    num = num >> 10;
+                    //move the int down so we have a number between 0-63 (Page Index)
+                    int pageIndex = num >> 10;
+
+                    //check to see if the entry is valid
+                    if(ptable.getPageTableEntry(pageIndex).getIsValid() == false) {
+                        //not valid
+                        misses++;
+                        accesses++;
+                        compMisses++;
+                    } else {
+
+                        //entry is valid, check to see if it is in memory
+                        if(ptable.getPageTableEntry(pageIndex).getInMemory() == false) {
+                            //not in memory
+                            misses++;
+                            accesses++;
+                        } else {
+                            //yes, is in memory
+                            hits++;
+                            accesses++;
+                        }
+
+                    }
+                    
+
 
                     
                 }
@@ -100,7 +124,7 @@ public class Main {
      * @param n the id of the page table
      * @return the correct page table
      */
-    public PageTable getCurrentPageTable(int n) {
+    public static PageTable getCurrentPageTable(int n) {
         PageTable pt = null;
 
         //go through all the PageTables to find the right one
