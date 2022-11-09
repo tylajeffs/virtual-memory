@@ -38,4 +38,9 @@ public class PageTable {
     }
 
 
+    @Override
+    public String toString() {
+        return "" + this.pageTableId;
+    }
+
 }

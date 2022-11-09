@@ -42,7 +42,10 @@ public class Main {
                 //store the instruction and the bits
                 String line = s.nextLine();
                 String instruction = line.split(" ")[0];
+
+                System.out.println("instruction: " + instruction);
                 int num = Integer.parseInt(line.split(" ")[1]);
+                System.out.println("num: " + num);
 
                 //check the instruction
                 if(instruction == "new") {
@@ -112,9 +115,10 @@ public class Main {
 
 
         //print out sum, median, and mean
-        System.out.println("sum: " );
-        System.out.println("mean: " );
-        System.out.println("median: ");
+        System.out.println("hits: " + hits);
+        System.out.println("misses: " + misses);
+        System.out.println("accesses: " + accesses);
+        System.out.println("compulsory misses: " + compMisses);
 
     }
 
