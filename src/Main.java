@@ -16,7 +16,7 @@ public class Main {
     static int misses = 0;
     static int compMisses = 0; //compulsory miss (will happen no matter what)
     static int currentPageTable = 0;
-    static PageTable ptable = null;
+    static PageTable ptable;
     static Memory memory = new Memory();
 
 
@@ -25,7 +25,7 @@ public class Main {
         
 
         //create 8 page tables
-        for(int i=0; i<8; i++) {
+        for(int i=1; i<9; i++) {
             PageTable p = new PageTable(i);
             pageTables.add(p);
         }
@@ -34,7 +34,7 @@ public class Main {
         
         try {
             //create scanner to read file
-            File f = new File("VMInput1.txt");
+            File f = new File("VMInput.txt");
             Scanner s = new Scanner(f);
 
             //read through every line 
@@ -45,7 +45,7 @@ public class Main {
                 String instruction = line.split(" ")[0];
                 int num = Integer.parseInt(line.split(" ")[1]);
 
-                
+
                 //check the instruction
                 if(instruction.equals("new") ) {
                     //we've already created all the page tables, so we don't need to worry about that here
@@ -53,7 +53,10 @@ public class Main {
 
                 } else if(instruction.equals("switch")) {
                     //get the current page table
+                    System.out.println("trying to switch to page table: " + num);
                     ptable = getCurrentPageTable(num);
+
+                    System.out.println("the current page table is: " + ptable);
 
                 } else if(instruction.equals("access")) {
                     
@@ -130,10 +133,12 @@ public class Main {
     public static PageTable getCurrentPageTable(int n) {
         PageTable pt = null;
 
+        
         //go through all the PageTables to find the right one
         for(int i=0; i<8; i++) {
             if(n == pageTables.get(i).getId()) {
                 pt = pageTables.get(i);
+                System.out.println(pt);
             }
         }
 
