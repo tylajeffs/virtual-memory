@@ -17,6 +17,7 @@ public class Main {
     static int compMisses = 0; //compulsory miss (will happen no matter what)
     static int currentPageTable = 0;
     static PageTable ptable = null;
+    static Memory memory = new Memory();
 
 
     public static void main(String[] args) {
@@ -42,11 +43,9 @@ public class Main {
                 //store the instruction and the bits
                 String line = s.nextLine();
                 String instruction = line.split(" ")[0];
-
-                System.out.println("instruction: " + instruction);
                 int num = Integer.parseInt(line.split(" ")[1]);
-                System.out.println("num: " + num);
 
+                
                 //check the instruction
                 if(instruction.equals("new") ) {
                     //we've already created all the page tables, so we don't need to worry about that here
@@ -64,8 +63,6 @@ public class Main {
                     //check to see if the entry is valid
                     if(ptable.getPageTableEntry(pageIndex).getIsValid() == false) {
                         //not valid
-                        System.out.println("The page table entry is NOT VALID");
-
                         misses++;
                         accesses++;
                         compMisses++;
@@ -78,17 +75,14 @@ public class Main {
                         //entry is valid, check to see if it is in memory
                         if(ptable.getPageTableEntry(pageIndex).getInMemory() == false) {
                             //not in memory
-
-                            System.out.println("The page table entry is VALID but NOT IN MEMORY");
                             misses++;
                             accesses++;
 
                             //get the new page frame from memory and update this page table entry
                             getNewPageFrame(ptable.getPageTableEntry(pageIndex));
-                            
+
                         } else {
                             //yes, is in memory
-                            System.out.println("The page table entry is VALID and IN MEMORY");
                             hits++;
                             accesses++;
                         }
@@ -101,12 +95,6 @@ public class Main {
 
             //close scanner
             s.close();
-
-
-
-
-
-
 
 
 
@@ -154,7 +142,9 @@ public class Main {
 
 
     public static void getNewPageFrame(PageTableEntry pte) {
+
         //get the new page frame from memory
+        memory.putIntoMemory(pte);
 
         //update the page table entry - it is now in memory and valid
         pte.setIsValid(true);
