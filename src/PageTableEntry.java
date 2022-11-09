@@ -1,12 +1,13 @@
 public class PageTableEntry {
 
-    int pageTableId;
     boolean inMemory;
+    boolean isValid;
     
 
     //constructor
     public PageTableEntry() {
         inMemory = false;
+        isValid = false;
     }
 
     public boolean getInMemory() {
@@ -15,6 +16,14 @@ public class PageTableEntry {
 
     public void setInMemory(boolean inMemory) {
         this.inMemory = inMemory;
+    }
+
+    public boolean getIsValid() {
+        return isValid;
+    }
+    
+    public void setIsValid(boolean isValid) {
+        this.isValid = isValid;
     }
     
 }

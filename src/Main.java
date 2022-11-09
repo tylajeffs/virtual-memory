@@ -2,12 +2,13 @@ import java.util.Arrays;
 import java.util.Scanner;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
 
 
 public class Main {
 
-    //create array of 8 page tables, current points to it 
-
+    //create array of 8 page tables
+    static ArrayList<PageTable> pageTables = new ArrayList<PageTable>();
 
     //global variables
     static int accesses = 0;
@@ -18,6 +19,15 @@ public class Main {
 
 
     public static void main(String[] args) {
+
+        
+
+        //create 8 page tables
+        for(int i=0; i<8; i++) {
+            PageTable p = new PageTable(i);
+            pageTables.add(p);
+        }
+
 
         
         try {
@@ -33,8 +43,6 @@ public class Main {
                 String instruction = line.split(" ")[0];
                 int num = Integer.parseInt(line.split(" ")[1]);
 
-                //CHANGE THE BITS DOWN??
-
                 //check the instruction
                 if(instruction == "new") {
                     //we've already created all the page tables, so we don't need to worry about that here
@@ -47,6 +55,8 @@ public class Main {
                 } else if(instruction == "access") {
                     //move the int down so we have a number between 0-63
                     num = num >> 10;
+
+                    
                 }
 
             }
@@ -83,4 +93,24 @@ public class Main {
         System.out.println("median: ");
 
     }
+
+
+    /**
+     * method to get the current page table
+     * @param n the id of the page table
+     * @return the correct page table
+     */
+    public PageTable getCurrentPageTable(int n) {
+        PageTable pt = null;
+
+        //go through all the PageTables to find the right one
+        for(int i=0; i<8; i++) {
+            if(n == pageTables.get(i).pageTableId) {
+                pt = pageTables.get(i);
+            }
+        }
+
+        return pt;
+    }
+
 }
