@@ -53,10 +53,7 @@ public class Main {
 
                 } else if(instruction.equals("switch")) {
                     //get the current page table
-                    System.out.println("trying to switch to page table: " + num);
                     ptable = getCurrentPageTable(num);
-
-                    System.out.println("the current page table is: " + ptable);
 
                 } else if(instruction.equals("access")) {
                     
